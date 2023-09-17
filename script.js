@@ -1,5 +1,5 @@
 const mensaje = document.querySelector('.mensaje');
-
+const boton = document.querySelector('.boton');
 /////////Arreglo base 
 let arreglo =[
     ['','',''],
@@ -29,6 +29,9 @@ let arregloGanador=[
 //Si el jugador es "0" se marcará una x, de otro modo sera un círculo
 let jugador1=true;
 
+//Variable para detener a las casillas cuando ya se haya ganado el juego
+let bandera=false;
+
 
 /////////Agregamos escucha de eventos a cada casilla
 
@@ -41,28 +44,36 @@ document.querySelectorAll('.casilla').forEach(casilla =>{
         }else{
 
             //Imprimimos si es X o O 
-            console.log(jugador1? 'X' : 'O');
-            casilla.innerHTML=`<span class='valor'>${jugador1? 'X' : 'O'}</span>`;
+            if(!bandera){
+                casilla.innerHTML=`<span class='valor'>${jugador1? 'X' : 'O'}</span>`;
+            }
             asignarCasilla();
             
             //Revisar si alguien ha ganado
             if(juegoGanado()){
+                bandera=true;
+                mensaje.style.visibility='visible';
                 if(jugador1){
                     mensaje.innerHTML='EL JUGADOR 1 HA GANADO!!!';
                 }else{
                     mensaje.innerHTML='EL JUGADOR 2 HA GANADO!!!';
                 }
 
-                //Deshabilitar el tablero
                 //Mostrar botón para reiniciar tablero
+                limpiar();
+                
             }else{  
                 //Determinar si el tablero ya se llenó y resultó en un empate
-                
-                //Cambiamos de jugador
-                jugador1=!jugador1;
+                if(tablero()){
+                    mensaje.innerHTML='EL JUEGO ES UN EMPATE';
+                    limpiar();
+                     
+                    
+                }else{
+                    //Cambiamos de jugador
+                    jugador1=!jugador1;
+                }
             
-            
-                //Si todas las casillas están llenas y nadie ha ganado entonces declarar un empate y mostrar botón para reiniciar
             }
             
         }
@@ -103,4 +114,32 @@ function juegoGanado(){
         } 
    }); 
    return bandera;
+}
+
+function tablero(){
+    let x=9;
+    document.querySelectorAll('.casilla').forEach(casilla =>{
+        if(casilla.textContent=='X'||casilla.textContent=='O'){
+            x--;
+        }
+        
+    });
+    if(x==0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function limpiar(){
+    jugador1=true;
+    boton.style.visibility='visible';
+    boton.addEventListener('click', e=>{
+        boton.style.visibility='hidden';
+        bandera=false;
+        document.querySelectorAll('.casilla').forEach(casilla =>{
+            casilla.innerHTML='';
+            
+        });
+    });
 }
