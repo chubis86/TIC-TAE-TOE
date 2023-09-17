@@ -1,5 +1,51 @@
+.app{
+    margin:0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;    
+}
+
+.titulo{
+    background-color:#82AAF9;
+    color: white;
+    font-weight: bold;
+    width:400px;
+    margin:25px;
+}
+
+.tablero{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 350px;
+    padding:10px;
+}
+
 .casilla{
-    width:30px;
-    height: 30px;
+    width:100px;
+    height: 100px;
     border:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+}
+
+.mensaje{
+    background-color:#CED5E3;
+    color: black;
+    font-weight: bold;
+    width:400px;
+    margin:25px;
+    font-size:1.5em;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }

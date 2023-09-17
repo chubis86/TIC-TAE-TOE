@@ -1,3 +1,5 @@
+const mensaje = document.querySelector('.mensaje');
+
 /////////Arreglo base 
 let arreglo =[
     ['','',''],
@@ -28,6 +30,45 @@ let arregloGanador=[
 let jugador1=true;
 
 
+/////////Agregamos escucha de eventos a cada casilla
+
+document.querySelectorAll('.casilla').forEach(casilla =>{
+    casilla.addEventListener('click', e=>{
+        
+        //Checamos primero si ya tiene contenido la casilla
+        if(casilla.textContent=='X'||casilla.textContent=='O'){
+            
+        }else{
+
+            //Imprimimos si es X o O 
+            console.log(jugador1? 'X' : 'O');
+            casilla.innerHTML=`<span class='valor'>${jugador1? 'X' : 'O'}</span>`;
+            asignarCasilla();
+            
+            //Revisar si alguien ha ganado
+            if(juegoGanado()){
+                if(jugador1){
+                    mensaje.innerHTML='EL JUGADOR 1 HA GANADO!!!';
+                }else{
+                    mensaje.innerHTML='EL JUGADOR 2 HA GANADO!!!';
+                }
+
+                //Deshabilitar el tablero
+                //Mostrar botón para reiniciar tablero
+            }else{  
+                //Determinar si el tablero ya se llenó y resultó en un empate
+                
+                //Cambiamos de jugador
+                jugador1=!jugador1;
+            
+            
+                //Si todas las casillas están llenas y nadie ha ganado entonces declarar un empate y mostrar botón para reiniciar
+            }
+            
+        }
+
+    });
+});
 
 /////////Relacionar el arreglo con las casillas
 function asignarCasilla(){
@@ -44,46 +85,9 @@ function asignarCasilla(){
         arreglo[x][y]=casilla[i].innerText;
         y++;    
     }
-    console.log(arreglo);
+    
 
 }
-
-asignarCasilla();
-/////////Agregamos escucha de eventos a cada casilla
-
-document.querySelectorAll('.casilla').forEach(casilla =>{
-    casilla.addEventListener('click', e=>{
-        
-        //Checamos primero si ya tiene contenido la casilla
-        if(casilla.textContent=='X'||casilla.textContent=='O'){
-            
-        }else{
-
-            //Imprimimos si es X o O 
-            console.log(jugador1? 'X' : 'O');
-            casilla.innerHTML=`<span class='valor'>${jugador1? 'X' : 'O'}</span>`;
-            console.log(arreglo);
-            asignarCasilla();
-            //Revisar si alguien ha ganado
-            if(juegoGanado()){
-                console.log("ALguien ha ganado");
-            }else{
-                
-                //Cambiamos de jugador
-                jugador1=!jugador1;
-            
-            
-                //Si todas las casillas están llenas y nadie ha ganado entonces declarar un empate y mostrar botón para reiniciar
-            }
-            
-        }
-
-    console.log(arreglo);       
-               
-        
-
-    });
-});
 
 function juegoGanado(){
    let bandera=0;
@@ -92,7 +96,7 @@ function juegoGanado(){
     if(
     (arreglo[combinacion[0][0]][combinacion[0][1]]=='X' && arreglo[combinacion[1][0]][combinacion[1][1]]=='X' && arreglo[combinacion[2][0]][combinacion[2][1]]=='X') 
     || 
-    (arreglo[combinacion[0][0]][combinacion[0][1]]=='Y' && arreglo[combinacion[1][0]][combinacion[1][1]]=='Y' && arreglo[combinacion[2][0]][combinacion[2][1]]=='Y')
+    (arreglo[combinacion[0][0]][combinacion[0][1]]=='O' && arreglo[combinacion[1][0]][combinacion[1][1]]=='O' && arreglo[combinacion[2][0]][combinacion[2][1]]=='O')
     )
         {
             bandera=true;
